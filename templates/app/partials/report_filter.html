@@ -1,0 +1,36 @@
+{% load i18n crispy_forms_tags %}
+
+<div class="modal fade" id="filterModal" data-bs-backdrop="static"
+data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Advanced Filter</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                aria-label="Close"></button>
+        </div>
+            <form action="" method="get">
+                <div class="modal-body">
+                    <div class="row">
+                        {% for field in form %}
+                        <div class="col-12">
+                            <div class="form-group">
+                                {{ field.errors }}
+                                {{ field|as_crispy_field }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-white me-auto border">{% translate "Reset" %}</button>
+                    <a href="javascript:void(0);" class="btn btn-outline-white border" data-bs-dismiss="modal">
+                        {% translate "Cancel" %}</a>
+                    <button type="submit" class="btn btn-primary">{% translate "Apply" %}</button>
+                </div>
+            </form>
+       
+    </div>
+</div>
+</div>

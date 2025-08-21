@@ -1,0 +1,16 @@
+{% if can_edit %}
+<form action="{% url 'hrms:leave_request_status_update' record.pk %}" method="GET" class="leave_request_update_form">
+    <select name="status" id="status" class="form-control niceselect" style="width:auto">
+        <option value="pending" {% if record.status == 'pending' %} selected {% endif %}>Pending</option>
+        <option value="approved" {% if record.status == 'approved' %} selected {% endif %}>Approved</option>
+        <option value="rejected" {% if record.status == 'rejected' %} selected {% endif %}>Rejected</option>
+    </select>
+</form>
+<input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}">
+
+{% else %}
+
+<span class="fw-bolder"> {{ record.get_status_display }} </span>
+
+{% endif %}
+

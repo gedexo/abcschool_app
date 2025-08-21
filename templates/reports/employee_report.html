@@ -1,0 +1,123 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %} {{ title }} {% endblock %}
+
+
+{% block content %}
+ <div class="content container-fluid print-content">
+    
+    <div class="page-header">
+        <div class="row">
+            <div class="col-sm-12">
+                
+                <div class="page-sub-header">
+                    <h3 class="page-title">{{ title }}</h3>
+                    <div class="page-rightheader ms-md-auto">
+                        <div class="btn-list">
+                  
+                          <a href="javascript:void(0);" onclick="window.print();" class="btn btn-sm btn-white" title="Print"> <i
+                              class="feather feather-printer"></i> </a>
+
+                          <a href="javascript:void(0);" class="btn btn-sm btn-white" data-bs-toggle="modal"
+                              data-bs-target="#filterModal" title="Filter Data"> <i class="feather feather-filter"></i> </a>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card card-table comman-shadow">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 my-2">
+                            {% if form.data %}
+                            <h4 class="text-center">{{ employee }} Salary Payable</h4>
+                            <p class="text-center">{{ form.start_date.data }} - {{ form.end_date.data }}</p>
+                            {% endif %}
+                            <h6>Opening Balance : {{ opening_balance }} </h6>
+                            <h6>Closing Balance : {{ closing_balance }} </h6>
+                        </div>
+                        <div class="col-6 ">
+                            <div class="table-responsive">
+                            <table class="table table-bordered table-striped fixed-header-table">
+                                <thead>
+                                    <tr class="bg-primary ">
+                                        <th colspan="5" class="text-center bg-light">Journals : {{ total_payroll }} </th>
+                                    </tr>
+                                    <tr>
+                                        <th>Year</th>
+                                        <th>Month</th>
+                                        <th>Perticular</th>
+                                        <th>Credit</th>
+                                    </tr>
+                                   
+                                </thead>
+                                <tbody>
+                                    
+                                    {% for payroll in payrolls %}
+                                    <tr>
+                                        <td>{{ payroll.year }}</td>
+                                        <td>{{ payroll.get_month_display }}</td>
+                                       <td>
+                                        <a href="{{ payroll.get_absolute_url }}">{{ payroll.employee }} Salary</a>
+                                       </td>
+                                       <td>{{ payroll.amount }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                  
+                                </tbody>
+                            </table>
+                        </div>
+                        </div>
+                        
+                        <div class="col-6 ">
+                            <div class="table-responsive">
+                            <table class="table table-bordered table-striped fixed-header-table">
+                                <thead>
+                                    <tr class="bg-primary ">
+                                        <th colspan="4" class="text-center bg-light">Payments : {{ total_payment }} </th>
+                                    </tr>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Perticular</th>
+                                        <th>Vch No</th>
+                                        <th>Debit</th>
+                                    </tr>
+                                   
+                                </thead>
+                                <tbody>
+                                    
+                                    {% for payment in payments %}
+                                    <tr>
+                                        <td>{{ payment.date }}</td>
+                                       <td>
+                                        <a href="{{ payment.get_absolute_url }}">
+                                            {{ payment.employee }} Payment <br>
+                                        </a>
+                                       </td>
+                                       <td>{{ payment.voucher_number }}</td>
+                                       <td>{{ payment.amount }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                  
+                                </tbody>
+                            </table>
+                        </div>
+                        </div>
+                      
+                    </div>
+                </div>
+              
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'app/partials/report_filter.html' %}
+
+{% endblock %}
+

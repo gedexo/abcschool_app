@@ -1,0 +1,15 @@
+{% if can_add %}
+<form action="{% url 'hrms:attendence_status_update' record.pk %}" method="GET" class="attendence_update_form">
+    <select name="status" id="status" class="form-control niceselect" style="width:auto">
+        <option value="present" {% if record.status == 'present' %} selected {% endif %}>Present</option>
+        <option value="absent" {% if record.status == 'absent' %} selected {% endif %}>Absent</option>
+    </select>
+</form>
+<input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}">
+
+{% else %}
+
+<span class="fw-bolder"> {{ record.get_status_display }} </span>
+
+{% endif %}
+

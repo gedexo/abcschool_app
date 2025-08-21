@@ -1,0 +1,19 @@
+<form action="{% url 'tasks:task_status_update' record.pk %}" method="GET" class="task_update_form">
+    <select name="status" id="status" class="form-control niceselect" style="width:auto">
+        {% if request.user.usertype == 'student' %}
+            {% if record.status == 'assigned' %}
+            <option value="assigned" {% if record.status == 'assigned' %} selected {% endif %}>Assigned</option>
+            {% endif %}
+            <option value="in_review" {% if record.status == 'in_review' %} selected {% endif %}>In Review</option>
+            {% if record.status == 'rework' %}
+            <option value="rework" {% if record.status == 'rework' %} selected {% endif %}>Rework</option>
+            {% endif %}
+        {% else %}
+            <option value="assigned" {% if record.status == 'assigned' %} selected {% endif %}>Assigned</option>
+            <option value="in_review" {% if record.status == 'in_review' %} selected {% endif %}>In Review</option>
+            <option value="rework" {% if record.status == 'rework' %} selected {% endif %}>Rework</option>
+            <option value="completed" {% if record.status == 'completed' %} selected {% endif %}>Completed</option>
+        {% endif %}
+    </select>
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+</form>

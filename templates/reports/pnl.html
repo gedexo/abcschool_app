@@ -1,0 +1,174 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %} {{ title }} {% endblock %}
+
+
+{% block content %}
+<div class="content container-fluid print-content">
+
+    <div class="page-header">
+        <div class="row">
+            <div class="col-sm-12">
+
+                <div class="page-sub-header">
+                    <h3 class="page-title">{{ title }}</h3>
+                    <div class="page-rightheader ms-md-auto">
+                        <div class="btn-list">
+
+                            <a href="javascript:void(0);" onclick="window.print();" class="btn btn-sm btn-white"
+                                title="Print"> <i class="feather feather-printer"></i> </a>
+
+                            <a href="javascript:void(0);" class="btn btn-sm btn-white" data-bs-toggle="modal"
+                                data-bs-target="#filterModal" title="Filter Data"> <i
+                                    class="feather feather-filter"></i> </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if form.data %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card card-table comman-shadow">
+                <div class="card-body">
+                    <div class="col-6 my-2 mx-auto text-center">
+                        {% if form.data %}
+                        <p class="">{{ form.start_date.data }} - {{ form.end_date.data }}</p>
+                        {% endif %}
+                        <h6 class="bg-success">NET PROFIT: {{ net_profit }} </h6>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-6 ">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped fixed-header-table">
+                                    <thead>
+                                        <tr class="bg-primary ">
+                                            <th colspan="5" class="text-center bg-light">CR : {{ total_cr }} </th>
+                                        </tr>
+                                        <tr>
+                                            <th>School Fee</th>
+                                            <th style="width: 30%;">{{ school_fee_due }}</th>
+                                        </tr>
+
+                                    </thead>
+                                   
+                                </table>
+                            </div>
+
+                            {% if other_income_qs%}
+                            <div class="table-responsive my-4">
+                                <table class="table table-bordered table-striped fixed-header-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Other Incomes</th>
+                                            <th style="width: 30%;">Amount</th>
+                                        </tr>
+
+                                    </thead>
+                                    <tbody>
+
+                                        {% for other_income in other_income_qs %}
+                                        <tr>
+                                            <td style="width: 70%;">
+                                                <a href="{{ other_income.get_absolute_url }}">
+                                                    {{ other_income.income_account }}</a>
+                                            </td>
+                                            <td style="width: 30%;">{{ other_income.amount }}</td>
+                                        {% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-6 ">
+                            
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped fixed-header-table">
+                                    <thead>
+                                        <tr class="bg-primary ">
+                                            <th colspan="4" class="text-center bg-light">DR : {{ total_dr }} </th>
+                                        </tr>
+                                        {% if payroll_qs %}
+                                        <tr>
+                                            <th>Employee</th>
+                                            <th> Month</th>
+                                            <th>Year</th>
+                                            <th>Amount</th>
+                                        </tr>
+                                        {% endif %}
+
+                                    </thead>
+                                    {% if payroll_qs %}
+                                    <tbody>
+
+                                        {% for payroll in payroll_qs %}
+                                        <tr>
+                                            <td>
+                                                <a href="{{ payroll.get_absolute_url }}">
+                                                    {{ payroll.employee }}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                {{ payroll.get_month_display }}
+                                            </td>
+                                            <td> {{ payroll.year }}</td>
+                                            <td>{{ payroll.amount }}</td>
+                                        </tr>
+                                        {% endfor %}
+
+                                    </tbody>
+                                    {% endif %}
+                                </table>
+
+                                
+                            </div>
+                          
+
+                            {% if other_expense_qs %}
+                            <div class="table-responsive my-4">
+                                <table class="table table-bordered table-striped fixed-header-table">
+                                    <thead>
+
+                                        <tr>
+                                            <th style="width: 70%;">Other Expeses</th>
+                                            <th>Amount</th>
+                                        </tr>
+
+                                    </thead>
+                                    <tbody>
+
+                                        {% for other_expense in other_expense_qs %}
+                                        <tr>
+                                            <td style="width: 70%;">
+                                                <a href="{{ other_expense.get_absolute_url }}">
+                                                    {{ other_expense.expense_account }}
+                                                </a>
+                                            </td>
+                                            <td>{{ other_expense.amount }}</td>
+                                        </tr>
+                                        {% endfor %}
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            {% endif %}
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% include 'app/partials/report_filter.html' %}
+
+    {% endblock %}

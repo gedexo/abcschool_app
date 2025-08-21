@@ -1,0 +1,92 @@
+{% load static %}
+
+<div class="header">
+
+    <div class="header-left">
+
+        <a href="/" class="logo mx-auto">
+            <img src="{% static 'web/img/logo.png' %}" alt="Logo">
+        </a>
+        <a href="{% url 'core:home' %}" class="logo logo-small">
+            <img src="{% static 'web/img/logo-small.png' %}" alt="Logo" width="30" height="30">
+        </a>
+    </div>
+
+    <div class="menu-toggle">
+        <a href="javascript:void(0);" id="toggle_btn">
+            <i class="fas fa-bars"></i>
+        </a>
+    </div>
+
+    <div class="top-nav-search">
+        {% comment %}
+        <form action="{% url 'core:home' %}">
+            <input type="text" class="form-control" name="q" value="{{query}}" placeholder="Search here">
+            <button class="btn" type="submit"><i class="fas fa-search"></i></button>
+        </form>
+        {% endcomment %}
+    </div>
+
+
+    <a class="mobile_btn" id="mobile_btn">
+        <i class="fas fa-bars"></i>
+    </a>
+
+
+    <ul class="nav user-menu">
+
+        <li class="nav-item zoom-screen me-2">
+            <a href="#" class="nav-link header-nav-list win-maximize">
+                <img src="{% static 'web/img/icons/header-icon-04.svg' %}" alt="">
+            </a>
+        </li>
+
+        <li class="nav-item dropdown has-arrow new-user-menus">
+            <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
+                <span class="user-img">
+                    {% if current_user.photo %}
+                    <img class="rounded-circle" src="{{ current_user.photo.url }}" width="40" height="40"
+                        alt="{{ current_user.username }}">
+                    {% else %}
+                    <img class="rounded-circle" src="{{ default_user_avatar }}" width="40" height="40"
+                        alt="{{ current_user.username }}">
+                    {% endif %}
+                    <div class="user-text">
+                        <h6>{{ name }}</h6>
+                        {% if current_user.user.employee %}
+                        <p class="text-muted mb-0">{{ current_user.user.employee.designation }}</p>
+                        {% else %}
+                        <p class="text-muted mb-0">{{ current_user.user.get_usertype_display }}</p>
+                        {% endif %}
+                    </div>
+                </span>
+            </a>
+            <div class="dropdown-menu">
+                <div class="user-header">
+                    <div class="avatar avatar-sm">
+                        {% if current_user.photo %}
+                        <img src="{{current_user.photo.url}}" alt="User Image" class="avatar-img rounded-circle">
+                        {% else %}
+                        <img src="{{default_user_avatar}}" alt="User Image" class="avatar-img rounded-circle">
+                        {% endif %}
+                    </div>
+                    <div class="user-text">
+                        <h6>{{ name }}</h6>
+                        {% if current_user.user.employee %}
+                        <p class="text-muted mb-0">{{ current_user.user.employee.designation }}</p>
+                        {% else %}
+                        <p class="text-muted mb-0">{{ current_user.user.get_usertype_display }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+
+                <a class="dropdown-item" href="{% url 'accounts:profile' %}">My Profile</a>
+                <a class="dropdown-item" href="{% url 'auth_password_change' %}">Change Password</a>
+                <a class="dropdown-item" href="{% url 'auth_logout' %}">Logout</a>
+            </div>
+        </li>
+
+    </ul>
+
+</div>

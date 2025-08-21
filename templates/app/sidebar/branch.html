@@ -1,0 +1,113 @@
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-inner slimscroll">
+        <div id="sidebar-menu" class="sidebar-menu">
+            <ul>
+                <li class="menu-title">
+                    <span>Main Menu</span>
+                </li>
+                <li class="{% if is_index %} active {% endif %}">
+                    <a href="{% url 'core:home' %}"><i class="feather-grid"></i> <span> Dashboard</span> </a>
+                </li>
+
+                <li class="{% if is_users %} active {% endif %}">
+                    <a href="{% url 'accounts:user_list' %}"><i class="fas fa-user"></i> <span> Users</span> </a>
+                </li>
+                <li class="{% if is_employees %} active {% endif %}">
+                    <a href="{% url 'employees:employee_list' %}"><i class="fas fa-user-circle"></i> <span>
+                            Employees</span> </a>
+
+                </li>
+                <li class="{% if is_students %} active {% endif %}">
+                    <a href="{% url 'students:student_list' %}"><i class="fas fa-graduation-cap"></i> <span>
+                            Students</span> </a>
+
+                </li>
+                
+                <li class="menu-title">
+                    <span>Course</span>
+                </li>
+
+                <li class="{% if is_batches %} active {% endif %}">
+                    <a href="#"><i class="fas fa-cubes"></i> <span> Batches</span> </a>
+                </li>
+               
+
+                <li class="{% if is_cources %} active {% endif %}">
+                    <a href="{% url 'courses:course_list' %}"><i class="fas fa-globe"></i> <span> Courses</span> </a>
+
+                </li>
+                <li class="{% if is_cource_type %} active {% endif %}">
+                    <a href="{% url 'courses:coursetype_list' %}"><i class="fas fa-book"></i> <span> Course Types</span>
+                    </a>
+
+                </li>
+
+                <li class="menu-title">
+                    <span>Accounting</span>
+                </li>
+                
+                
+                <li class="{% if is_additional_fee_students %} active {% endif %}">
+                    <a href="{% url 'fees:additional_fee_student_list' %}"><i class="fas fa-money-check-alt"></i> <span>
+                        Additional Fees</span> </a>
+                </li>
+                
+
+                <li class="submenu {% if is_employeepayrolls or is_employeepayments %} active {% endif %}">
+                    <a href="#"><i class="fas fa-building"></i> <span> Employee</span> <span
+                            class="menu-arrow"></span></a>
+                    <ul>
+                        <li><a href="{% url 'employees:employeepayroll_list' %}" class="{% if is_employeepayrolls %} active {% endif %}"> Employee Pay Rolls </a>
+                        </li>
+                        <li><a href="{% url 'employees:employeepayment_list' %}" class="{% if is_employeepayment %} active {% endif %}"> Employee Payments </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="{% if is_studentfeestatements %} active {% endif %}">
+                    <a href="{% url 'students:studentfeestatement_list' %}"><i class="fas fa-money-check-alt"></i> <span>
+                        Student Receipts</span> </a>
+                </li>
+                <li class="{% if is_branche_receipts %} active {% endif %}">
+                    <a href="{% url 'branches:branch_receipt_list' %}"><i class="fas fa-money-check-alt"></i> <span>
+                        Payed To ABC</span> </a>
+                </li>
+
+                
+
+                <li class="{% if is_contra %} active {% endif %}">
+                    <a href="{% url 'accounting:contra_list' %}"><i class="fas fa-money-check-alt"></i> <span>
+                            Contras</span> </a>
+                </li>
+                <li class="{% if is_accounts %} active {% endif %}">
+                    <a href="{% url 'accounting:account_list' %}"><i class="fas fa-comment-dollar"></i> <span>
+                            Accounts</span> </a>
+                </li>
+
+                <li class="submenu {% if is_expense or is_expense %} active {% endif %}">
+                    <a href="#"><i class="fas fa-building"></i> <span> Expense</span> <span
+                            class="menu-arrow"></span></a>
+                    <ul>
+                        <li><a href="{% url 'accounting:expense_list' %}" class="{% if is_expense %} active {% endif %}"> Expense </a>
+                        </li>
+                        <li><a href="{% url 'accounting:expense_account_list' %}" class="{% if is_expense_account %} active {% endif %}"> Expense Account  </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="submenu {% if is_income or is_income_account %} active {% endif %}">
+                    <a href="#"><i class="fas fa-building"></i> <span> Income</span> <span
+                            class="menu-arrow"></span></a>
+                    <ul>
+                        <li><a href="{% url 'accounting:income_list' %}" class="{% if is_income %} active {% endif %}"> Income  </a>
+                        </li>
+                        <li><a href="{% url 'accounting:income_account_list' %}" class="{% if is_income_account %} active {% endif %}"> Income Account  List </a>
+                        </li>
+                    </ul>
+                </li>
+                
+
+            </ul>
+        </div>
+    </div>
+</div>

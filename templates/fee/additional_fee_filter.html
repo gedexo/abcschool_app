@@ -1,0 +1,82 @@
+{% extends 'app/base.html' %}
+{% load render_table from django_tables2 %}
+{% load export_url from django_tables2 %}
+{% load static %}
+
+{% block title %} {{ title }} {% endblock %}
+
+
+{% block content %}
+ <div class="content container-fluid print-content">
+    
+    <div class="page-header">
+        
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-sub-header">
+                    <div class="page-rightheader ms-md-auto">
+                        <div class="btn-list">
+                  
+                          <a href="javascript:void(0);" onclick="window.print();" class="btn btn-sm btn-white" title="Print"> <i
+                              class="feather feather-printer"></i> </a>
+
+                          <a href="javascript:void(0);" class="btn btn-sm btn-white" data-bs-toggle="modal"
+                              data-bs-target="#filterModal" title="Filter Data"> <i class="feather feather-filter"></i> </a>
+                              {% if table.paginated_rows %}
+                          <a href="{% export_url 'xlsx' %}" class="btn btn-sm btn-white" title="Export Data">
+                            <i class="fas fa-file-export"></i>
+                            </a>
+                            {% endif %}                  
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <div class="row">
+        
+        <div class="col-sm-12">
+            <div class="card card-table comman-shadow">
+                {% if table.paginated_rows %}
+                <div class="card-body">
+                    <div class="page-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h3 class="page-title">{{ title }}</h3>
+                            </div>
+                            {% if can_add %}
+                            <div class="col-auto text-end float-end ms-auto download-grp">
+                                
+                                <a href="{{ for_student }}" class="btn btn-primary"><i class="fas fa-plus"></i> For Student</a>
+                                <a href="{{ for_standard }}" class="btn btn-primary"><i class="fas fa-plus"></i> For Standard</a>
+                                <a href="{{ for_students }}" class="btn btn-primary"><i class="fas fa-plus"></i> For Students</a>
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+                    </div>
+                   
+                   
+                    <div class="table-responsive">
+                        {% render_table table %}
+                    </div>
+                </div>
+                {% else %}
+                <div class="card-body">
+                    {{title|title}} List is empty
+                    {% if can_add %}<a href="{{new_link}}">Add New One</a>{% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'app/partials/filter.html' %}
+
+{% endblock %}
+
+{% block javascript %}
+
+{% endblock javascript %}

@@ -1,0 +1,89 @@
+{% extends 'app/base.html' %}
+{% load static i18n crispy_forms_tags %}
+{% block title %} {{object}}{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'web/js/custome.js' %}"></script>
+{% endblock javascript %}
+{% block content %}
+
+<div class="content container-fluid">
+   
+    <div class="row">
+        <div class="col-md-12">
+            <form method="post" enctype="multipart/form-data" id="image_update_form">
+                {% csrf_token %}
+                <div class="profile-header">
+                  <div class="row align-items-center">
+                    <div class="col-auto profile-image">
+                        {% if object.photo %}
+                      <img class="rounded-circle" alt="User Image" src="{{object.photo.url}}">
+                      {% else %}
+                      <img class="rounded-circle" alt="User Image" src="{{default_user_avatar}}">
+                      {% endif %}
+                      <div class="image-upload text-center">
+                        {{form.photo}}
+                        <label for="id_photo" class="badge badge-soft-secondary">Change</label>
+                      </div>
+                    </div>
+                
+                    <div class="col ms-md-n2 profile-user-info">
+                      <h4 class="user-name mb-0">{{object.fullname}}</h4>
+                      <h6 class="text-muted"><strong>Designation</strong>: {{object.user.get_usertype_display}}</h6>
+                    </div>
+                    <div class="col-auto profile-btn">
+                       
+                    </div>
+                  </div>
+                </div>
+              </form>
+            
+
+
+              <div class="row mt-3">
+                <div class="col-md-6">
+                  {% if object %}
+                  <div class="card content_card">
+                    <div class="card-header">
+                      <div class="card-title d-flex align-items-center w-100">
+                        <h5 class="mb-0">{{object}}</h5>
+                      </div>
+                    </div>
+                    <div class="card-body p-0">
+                      <div class="table-responsive">
+                        <table class="table table-hover info_table mb-0" style="width:100%;">
+                          <tbody>
+                            {% for name, value in object.get_fields|slice:"5:" %}
+                            {% if value %}
+                            <tr>
+                              <td> {{name}} </td>
+                              <td> {{ value }} </td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+            
+                  </div>
+                  {% else %}
+                  <div class="card content_card">
+                    <div class="card-body">
+                      <p class="text-center">There is nothing here</p>
+                    </div>
+                  </div>
+                  {% endif %}
+                </div>
+            
+              </div>
+              <!-- End Row-->
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock content %}
+
+

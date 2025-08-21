@@ -1,0 +1,59 @@
+{% extends 'registration/registration_base.html' %}
+{% load i18n crispy_forms_tags %}
+
+{% block title %} Login {% endblock %}
+
+{% load static %}
+{% block content %}
+<div class="loginbox">
+    <div class="login-left">
+        <img class="img-fluid" src="{% static 'web/img/login.jpg' %}" alt="Logo">
+    </div>
+    <div class="login-right">
+        <div class="login-right-wrap">
+            <h1 class="text-center">Welcome to ABC School</h1>
+            <h2 class="mb-1 mt-4">Sign in</h2>
+            {% if messages %}
+
+            {% for message in messages %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Warning !</strong> {{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+            <form action="" autocomplete="off" method="post">
+                {% csrf_token %}
+                {% if form.errors %}
+                <div class="alert alert-danger">
+                  <ul>
+                    {% for field_name, error_msgs in form.errors.items %}
+                    {% for error_msg in error_msgs %}
+                    <li>{{ error_msg }}</li>
+                    {% endfor %}
+                    {% endfor %}
+                  </ul>
+                </div>
+                {% endif %}
+                {{ form.username|as_crispy_field }}
+                {{ form.password|as_crispy_field }}
+                <div class="forgotpass">
+                    <div class="remember-me">
+                        <label class="custom_check mr-2 mb-0 d-inline-flex remember-me"> Remember me
+                            <input type="checkbox" name="radio">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <a href="/accounts/password/reset/">Forgot Password?</a>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary btn-block" type="submit">Login</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

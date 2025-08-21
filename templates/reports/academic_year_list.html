@@ -1,0 +1,69 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% load export_url from django_tables2 %}
+
+
+{% block title %} {{ title }} {% endblock %}
+
+
+{% block content %}
+<div class="content container-fluid print-content">
+
+    <div class="page-header">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-sub-header">
+                    <div class="page-rightheader ms-md-auto">
+                        <div class="btn-list">
+
+                            <a href="javascript:void(0);" onclick="window.print();" class="btn btn-sm btn-white"
+                                title="Print"> <i class="feather feather-printer"></i> </a>
+
+                            <a href="javascript:void(0);" class="btn btn-sm btn-white" data-bs-toggle="modal"
+                                data-bs-target="#filterModal" title="Filter Data"> <i
+                                    class="feather feather-filter"></i> </a>
+                            {% if table.paginated_rows %}
+                            <a href="{% export_url 'xlsx' %}" class="btn btn-sm btn-white" title="Export Data">
+                                <i class="fas fa-file-export"></i>
+                            </a>
+                            {% endif %}
+
+                            {% if can_add %}
+                            <a href="{{new_link}}" class="btn btn-sm btn-white" title="Add"><i class="fas fa-plus"></i>
+                            </a>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="row ">
+        <div class="col-12">
+            <h5>{{ title }}</h5>
+        </div>
+        
+        {% for object in object_list %}
+
+        <div class="col-xl-2 col-sm-6 col-12 d-flex mt-3">
+            <div class="card bg-comman w-100">
+                <a href="{% url 'reports:student_master_data' object.pk %}" class="stretched-link"></a>
+                <div class="card-body">
+                    <div class="db-widgets d-flex justify-content-between align-items-center">
+                        <div class="">
+                            <h6>{{object}}</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% include 'app/partials/filter.html' %}
+
+{% endblock %}

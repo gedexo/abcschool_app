@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <!-- Primary Meta Tags -->
+    <title> {% block title %} {% endblock %} | ABC SCHOOL</title>
+
+    <meta name="title" content="ABC Montessori School Malappuram, Kondotty | Child-Centered Education">
+    <meta name="description"
+        content="Discover ABC Montessori School in Malappuram, Kondotty, where we provide a nurturing and child-centered education using the Montessori method. Explore our programs and facilities.">
+    <meta name="keywords"
+        content="Montessori School, Malappuram, Kondotty, Child-Centered Education, ABC Montessori, Early Childhood Education, Hands-On Learning, Individualized Education, Montessori Method">
+    <meta name="robots" content="index, follow">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="language" content="English">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://myapp.abcmontessori.school/" />
+    <meta property="og:title" content="ABC Montessori School Malappuram, Kondotty | Child-Centered Education" />
+    <meta property="og:description"
+        content="Discover ABC Montessori School in Malappuram, Kondotty, where we provide a nurturing and child-centered education using the Montessori method. Explore our programs and facilities." />
+    <meta property="og:image" content="https://myapp.abcmontessori.school/static/main/assets/img/meta-img.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://myapp.abcmontessori.school/" />
+    <meta property="twitter:title" content="ABC Montessori School Malappuram, Kondotty | Child-Centered Education" />
+    <meta property="twitter:description"
+        content="Discover ABC Montessori School in Malappuram, Kondotty, where we provide a nurturing and child-centered education using the Montessori method. Explore our programs and facilities." />
+    <meta property="twitter:image" content="https://myapp.abcmontessori.school/static/main/assets/img/meta-img.png" />
+
+    <!-- Meta Tags Generated with https://metatags.io -->
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'web/favicon_icon/apple-touch-icon.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'web/favicon_icon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'web/favicon_icon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'web/favicon_icon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'web/favicon_icon/site.webmanifest' %}">
+    <link rel="mask-icon" href="{% static 'web/favicon_icon/safari-pinned-tab.svg' %}" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anek+Malayalam:wght@200;300;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{% static 'web/plugins/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'web/plugins/feather/feather.css' %}">
+    <link rel="stylesheet" href="{% static 'web/plugins/icons/flags/flags.css' %}">
+    <link rel="stylesheet" href="{% static 'web/plugins/fontawesome/css/fontawesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'web/plugins/fontawesome/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'web/css/style.css' %}">
+</head>
+
+<body>
+
+    <div class="main-wrapper login-body">
+        <div class="login-wrapper">
+            <div class="container">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+
+
+    <script src="{% static 'web/js/jquery-3.6.0.min.js' %}"></script>
+
+    <script src="{% static 'web/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <script src="{% static 'web/js/feather.min.js' %}"></script>
+
+    <script src="{% static 'web/js/script.js' %}"></script>
+</body>
+
+</html>

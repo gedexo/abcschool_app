@@ -1,0 +1,71 @@
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-inner slimscroll">
+        <div id="sidebar-menu" class="sidebar-menu">
+            <ul>
+                <li class="menu-title">
+                    <span>Main Menu</span>
+                </li>
+                <li class="{% if is_index %} active {% endif %}">
+                    <a href="{% url 'core:home' %}"><i class="feather-grid"></i> <span> Dashboard</span> </a>
+                </li>
+
+
+
+                <li class="{% if is_attendance %} active {% endif %}">
+                    <a href="{% url 'hrms:attendance_list' %}"><i class="fas fa-graduation-cap"></i> <span>
+                            Attendance</span> </a>
+
+                </li>
+
+
+                <li class="{% if is_student_tasks %} active {% endif %}">
+                    <a href="{% url 'tasks:student_task_list' %}"><i class="fas fa-graduation-cap"></i> <span>
+                            Tasks</span> </a>
+
+                </li>
+                <li class="{% if is_courses %} active {% endif %}">
+                    <a href="{% url 'courses:course_list' %}"><i class="fas fa-graduation-cap"></i> <span>
+                        Courses</span> </a>
+
+                </li>
+
+                <li class="{% if is_student_exams %} active {% endif %}">
+                    <a href="{% url 'exams:student_exam_list' %}"><i class="fas fa-graduation-cap"></i> <span>
+                            Student Exams</span> </a>
+
+                </li>
+
+                <li class="menu-title">
+                    <span>Fees</span>
+                </li>
+
+                <li class="{% if is_academic_year_student_fees %} active {% endif %}">
+                    <a href="{% url 'students:academic_year_student_fee_list' %}"><i class="fas fa-graduation-cap"></i>
+                        <span>
+                            Academic Year Fee</span> </a>
+
+                </li>
+
+                <li class="{% if is_studentfeestatements %} active {% endif %}">
+                    <a href="{% url 'students:studentfeestatement_list' %}"><i class="fas fa-money-check-alt"></i>
+                        <span>
+                            Student Receipts</span> </a>
+                </li>
+                
+                <li class="{% if is_additional_fee_students %} active {% endif %}">
+                    <a href="{% url 'fees:additional_fee_student_list' %}"><i class="fas fa-money-check-alt"></i> <span>
+                            Additional Fees</span> </a>
+                </li>
+
+                
+
+                <li class="{% if is_suggestions %} active {% endif %}">
+                    <a href="{% url 'core:suggestion_list' %}"><i class="fas fa-graduation-cap"></i> <span>
+                        Suggestions</span> </a>
+
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</div>

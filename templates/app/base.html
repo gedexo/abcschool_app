@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title> {% block title %} {% endblock %} | ABC School</title>
+    <link rel="shortcut icon" href="{% static 'web/img/logo-small.png' %}  ">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anek+Malayalam:wght@200;300;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{% static 'web/plugins/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'web/plugins/feather/feather.css' %}">
+    <link rel="stylesheet" href="{% static 'web/plugins/fontawesome/css/fontawesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'web/plugins/fontawesome/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'web/plugins/select2/css/select2.min.css' %}">
+    <link rel="stylesheet" href="{% static 'web/css/bootstrap-datetimepicker.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'web/css/style.css' %}?v=1.0">
+    {{ form.media }}
+</head>
+
+  <div class="preloader"></div>
+  <div class="main-wrapper">
+    {% block header %}
+    {% include 'app/partials/header.html' %}
+    {% endblock %}
+
+      {% if request.user.usertype == "management" %}{% include 'app/sidebar/management.html' %}{% endif %}
+      {% if request.user.usertype == "student" %}{% include 'app/sidebar/student.html' %}{% endif %}
+      {% if request.user.usertype == "teacher" %}{% include 'app/sidebar/teacher.html' %}{% endif %}
+      {% if request.user.usertype == "branch" %}{% include 'app/sidebar/branch.html' %}{% endif %}
+      {% if request.user.usertype == "accountant" %}{% include 'app/sidebar/accountant.html' %}{% endif %}
+    
+
+
+      <div class="page-wrapper">
+
+          {% block content %}
+          {% endblock %}
+
+          <footer>
+              Copyright © ABC {% now 'Y' %}. All Rights Reserved.
+              {% comment %}
+              Developed By
+              <a href="https://gedexo.com/" target="_blank" rel="noopener noreferrer">Gedexo Technologies</a>
+              {% endcomment %}
+
+          </footer>
+
+      </div>
+
+  </div>
+
+
+  <script src="{% static 'web/js/jquery-3.6.0.min.js' %}"></script>
+
+  <script src="{% static 'web/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+  <script src="{% static 'web/js/feather.min.js' %}"></script>
+
+  <script src="{% static 'web/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+  <script src="{% static 'web/plugins/select2/js/select2.min.js' %}"></script>
+  <script src="{% static 'web/plugins/moment/moment.min.js' %}"></script>
+  <script src="{% static 'web/js/bootstrap-datetimepicker.min.js' %}"></script>
+
+  {% block js %}{% endblock %}
+
+  <script src="{% static 'web/js/script.js' %}?v=1.0"></script>
+
+  {% block javascript %}{% endblock %}
+</body>
+</html>

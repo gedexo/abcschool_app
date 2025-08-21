@@ -1,0 +1,271 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% load render_table from django_tables2 %}
+
+{% block title %} Home {% endblock %}
+
+{% block content %}
+<div class="content container-fluid">
+
+    <div class="page-header">
+        <div class="row">
+            <div class="col-lg-12 col-sm-12">
+                <div class="page-sub-header">
+                    <h3 class="page-title">{{greeting}} {{ request.user }}!</h3>
+                   
+                </div>
+            </div>
+           
+        </div>
+    </div>
+
+    {% if request.user.usertype != 'student' %}
+    <div class="row ">
+        <div class="col-12">
+            <h5>Reports</h5>
+        </div>
+       
+        <div class="col-xl-2 col-sm-6 col-12 d-flex">
+            <div class="card bg-comman w-100">
+                <a href="{% url 'students:student_list' %}" class="stretched-link"></a>
+                <div class="card-body">
+                    
+                    <div class="db-widgets d-flex justify-content-between align-items-center">
+                        <div class="db-info">
+                            <h6>Students Count</h6>
+                            <h3>{{ students_count }} </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-2 col-sm-6 col-12 d-flex">
+            <div class="card bg-comman w-100">
+                <a href="#" class="stretched-link"></a>
+                <div class="card-body">
+                    
+                    <div class="db-widgets d-flex justify-content-between align-items-center">
+                        <div class="db-info">
+                            <h6>Divisions Count</h6>
+                            <h3>{{ division_count }} </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if my_divisions %}
+        {% for division in my_divisions %}
+
+        <div class="col-xl-2 col-sm-6 col-12 d-flex">
+            <div class="card bg-comman w-100">
+                <a href="{% url 'core:home' %}?division__standard={{division.standard.pk}}&division__name__icontains={{division.name}}" class="stretched-link"></a>
+                <div class="card-body">
+                    
+                    <div class="db-widgets d-flex justify-content-between align-items-center">
+                        <div class="db-info">
+                            <h6>{{ division }}</h6>
+                            <h3> Students : {{ division.student_count }} </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% if request.user.usertype == 'accountant' or request.user.usertype == 'management'%}
+        
+       
+        <div class="col-xl-2 col-sm-6 col-12 d-flex">
+            <div class="card bg-comman w-100">
+                <a href="{% url 'employees:employee_list' %}?user__usertype=teacher" class="stretched-link"></a>
+                <div class="card-body">
+                    <div class="db-widgets d-flex justify-content-between align-items-center">
+                        <div class="db-info">
+                            <h6>Teachers</h6>
+                            <h3>{{ teacher_count }} </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-2 col-sm-6 col-12 d-flex">
+            <div class="card bg-comman w-100">
+                <a href="{% url 'employees:employee_list' %}?user__usertype=worker" class="stretched-link"></a>
+                <div class="card-body">
+                    <div class="db-widgets d-flex justify-content-between align-items-center">
+                        <div class="db-info">
+                            <h6>Workers</h6>
+                            <h3>{{ workers_count }} </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% for account in accounts %}
+        <div class="col-xl-2 col-sm-6 col-12 d-flex">
+            <div class="card bg-comman w-100">
+                <a href="{% url 'accounting:account_list' %}" class="stretched-link"></a>
+                <div class="card-body">
+                    
+                    <div class="db-widgets d-flex justify-content-between align-items-center">
+                        <div class="db-info">
+                            <h6>{{account}} Balance</h6>
+                            <h3>{{ account.balance }} </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+       {% endif %}
+
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h5>Today's Reports</h5>
+        </div>
+       
+        <div class="col-xl-2 col-sm-6 col-12 d-flex">
+            <div class="card bg-comman w-100">
+                <a href="{% url 'hrms:attendance_list' %}?date={{ now|date:'Y-m-d' }}&status=present" class="stretched-link"></a>
+                <div class="card-body">
+                    
+                    <div class="db-widgets d-flex justify-content-between align-items-center">
+                        <div class="db-info">
+                            <h6>Today Present</h6>
+                            <h3>{{ today_present }} </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-2 col-sm-6 col-12 d-flex">
+            <div class="card bg-comman w-100">
+                <a href="{% url 'hrms:attendance_list' %}?date={{ now|date:'Y-m-d' }}&status=absent" class="stretched-link"></a>
+                <div class="card-body">
+                    
+                    <div class="db-widgets d-flex justify-content-between align-items-center">
+                        <div class="db-info">
+                            <h6>Today Absent</h6>
+                            <h3>{{ today_absent }} </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if request.user.usertype == 'management' or request.user.usertype == 'accountant' %}
+        {% for account in accounts %}  
+        <div class="col-xl-2 col-sm-6 col-12 d-flex">
+            <div class="card bg-comman w-100">
+                <div class="card-body">
+                    
+                    <div class="db-widgets d-flex justify-content-between align-items-center">
+                        <div class="db-info">
+                            <h6>{{account}} Credit</h6>
+                            <h3>{{ account.today_credit }} </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-2 col-sm-6 col-12 d-flex">
+            <div class="card bg-comman w-100">
+                <div class="card-body">
+                    
+                    <div class="db-widgets d-flex justify-content-between align-items-center">
+                        <div class="db-info">
+                            <h6>{{account}} Debit</h6>
+                            <h3>{{ account.today_expense }} </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card card-table comman-shadow">
+                <div class="card-body">
+                    
+                    <div class="table-responsive">
+                       
+                        {% render_table table %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    {% else %}
+    <div class="row ">
+        
+        <div class="col-xl-2 col-sm-6 col-12 d-flex">
+            <div class="card bg-comman w-100">
+                <div class="card-body">
+                    
+                    <div class="db-widgets d-flex justify-content-between align-items-center">
+                        <div class="db-info">
+                            <h6>Total Fee</h6>
+                            <h3>{{ current_school_fee }} </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-2 col-sm-6 col-12 d-flex">
+            <div class="card bg-comman w-100">
+                <a href="{% url 'students:studentfeestatement_list' %}" class="stretched-link"></a>
+                <div class="card-body">
+                    
+                    <div class="db-widgets d-flex justify-content-between align-items-center">
+                        <div class="db-info">
+                            <h6>Fee Paid</h6>
+                            <h3>{{ total_paid }} </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-2 col-sm-6 col-12 d-flex">
+            <div class="card bg-comman w-100">
+                <div class="card-body">
+                    
+                    <div class="db-widgets d-flex justify-content-between align-items-center">
+                        <div class="db-info">
+                            <h6>Fee Pending</h6>
+                            <h3>{{ fee_pending }} </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        {% comment %}
+        <div class="col-xl-2 col-sm-6 col-12 d-flex">
+            <div class="card bg-comman w-100">
+                <div class="card-body">
+                    <div class="db-widgets d-flex justify-content-between align-items-center">
+                        <div class="db-info">
+                            <h6>Out Standing</h6>
+                            <h3>{{ student_out_standing }} </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endcomment %}
+
+
+    </div>
+    {% endif %}
+    
+</div>
+
+{% endblock %}
+
+
+

@@ -1,0 +1,12 @@
+{% if can_add %}
+<form action="{% url 'exams:student_mark_update' record.pk %}" method="GET" class="exam_mark_update_form">
+    <input type="number" value="{{record.marks_obtained}}" name="marks_obtained" min="0" class="numberinput form-control " id="id_marks_obtained" style="width: 100px;">
+</form>
+<input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}">
+
+{% else %}
+
+<span class="fw-bolder"> {{ record.marks_obtained }} </span>
+
+{% endif %}
+

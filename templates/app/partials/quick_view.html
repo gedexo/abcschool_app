@@ -1,0 +1,20 @@
+<button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#Task_{{record.pk}}">
+    View
+</button>
+
+<div class="modal fade" id="Task_{{record.pk}}" data-bs-backdrop="static"
+data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">{{ record.suggested_by }} Suggestion</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+           {{ record.suggestion }}
+        </div>
+    </div>
+</div>
+</div>

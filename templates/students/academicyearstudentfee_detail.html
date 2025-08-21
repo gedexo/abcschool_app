@@ -1,0 +1,113 @@
+{% extends 'app/base.html' %}
+{% load render_table from django_tables2 %}
+{% load static %}
+
+{% block title %} {{ object }} Franchise Details {% endblock %}
+
+
+
+{% block content %}
+ <div class="content container-fluid print-content">
+    
+    <div class="page-header">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="page-sub-header">
+                <div class="page-rightheader ms-md-auto">
+                    <div class="btn-list">
+              
+                      <a href="javascript:void(0);" onclick="window.print();" class="btn btn-sm btn-white" title="Print"> <i
+                          class="feather feather-printer"></i> </a>
+              
+                      <a href="{{object.get_update_url}}" class="btn btn-sm btn-white" data-bs-placement="top"
+                        data-bs-toggle="tooltip" title="Edit"> <i class="text-primary feather feather-edit-3"></i> </a>
+              
+                      <a href="{{object.get_delete_url}}" class="btn btn-sm btn-white" data-bs-placement="top"
+                        data-bs-toggle="tooltip" title="Delete"> <i class="text-danger feather feather-trash-2"></i> </a>
+              
+                    </div>
+                  </div>
+            </div>
+        </div>
+          <div class="col-12">
+            <div class="card bg-white">
+                
+                <div class="card-body">
+                  
+                    <ul class="nav nav-tabs nav-tabs-solid nav-justified">
+                        <li class="nav-item"><a class="nav-link active" href="#overview"
+                                data-bs-toggle="tab">OverView</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#fee-structure"
+                                data-bs-toggle="tab">Fee Structure</a></li>
+                        
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane show active" id="overview">
+                          {% if object %}
+                          <div class="card content_card">
+                            <div class="card-header">
+                              <div class="card-title d-flex align-items-center w-100">
+                                <h5 class="mb-0">{{object}}</h5>
+                              </div>
+                            </div>
+                            <div class="card-body p-0">
+                              <div class="table-responsive">
+                                <table class="table table-hover info_table mb-0" style="width:100%;">
+                                  <tbody>
+                                    {% for name, value in object.get_fields|slice:"5:" %}
+                                    {% if value %}
+                                    <tr>
+                                      <td> {{name}} </td>
+                                      <td> {{ value }} </td>
+                                    </tr>
+                                    {% endif %}
+                                    {% endfor %}
+                                  </tbody>
+                                </table>
+                              </div>
+                              
+                            </div>
+                    
+                          </div>
+                          {% else %}
+                          <div class="card content_card">
+                            <div class="card-body">
+                              <p class="text-center">There is nothing here</p>
+                            </div>
+                          </div>
+                          {% endif %}
+                        </div>
+                        <div class="tab-pane" id="fee-structure">
+                          <div class="table-responsive">
+                           
+                            <table class="table table-hover">
+                              <thead>
+                                <tr>
+                                    <th>Month</th>
+                                    <th>Fee</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for fee in object.generate_fee_structure %}
+                                    <tr>
+                                        <td>{{ fee.month }}</td>
+                                        <td>₹ {{ fee.fee }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                            </table>
+                          </div>
+                        
+                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+          
+        </div>
+    </div>
+   
+</div>
+
+{% endblock %}

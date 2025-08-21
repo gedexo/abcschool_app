@@ -1,0 +1,291 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %} {{ title }} {% endblock %}
+
+
+{% block content %}
+ <div class="content container-fluid print-content">
+    
+    <div class="page-header">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-sub-header">
+                    <h3 class="page-title">{{ title }}</h3>
+                    <div class="page-rightheader ms-md-auto">
+                        <div class="btn-list">
+                  
+                          <a href="javascript:void(0);" onclick="window.print();" class="btn btn-sm btn-white" title="Print"> <i
+                              class="feather feather-printer"></i> </a>
+
+                          <a href="javascript:void(0);" class="btn btn-sm btn-white" data-bs-toggle="modal"
+                              data-bs-target="#filterModal" title="Filter Data"> <i class="feather feather-filter"></i> </a>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card card-table comman-shadow">
+                {% if form.data %}
+                <div class="card-body">
+                    <div class="col-12 my-2">
+                        {% if form.data %}
+                        <h4 class="text-center">{{account}} Account Flow</h4>
+                        <h4 class="text-center">{{ form.start_date.data }} - {{ form.end_date.data }}</h4>
+                        {% endif %}
+                        <h4>Opening Balance : {{ opening_balance }} </h4>
+                        <h4>Closing Balance : {{ closing_balance }} </h4>
+                    </div>
+                    <div class="row">
+                        
+                        <div class="col-6 ">
+                            <div class="table-responsive">
+                            <table class="table table-bordered table-striped fixed-header-table">
+                                <thead>
+                                    <tr class="bg-primary ">
+                                        <th colspan="4" class="text-center bg-light">CR : {{ current_dr }} </th>
+                                    </tr>
+                                   
+                                </thead>
+                               
+                            </table>
+                            {% if employee_payment_qs %}
+                            <h6 class="my-4 bg-primary">Employee Payments : {{ employee_payment }} </h6>
+                            <table class="table  table-striped ">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Employee</th>
+                                        <th>Payment Voucher</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    {% for employee_payment in employee_payment_qs %}
+                                    <tr>
+                                        <td>{{ employee_payment.date }}</td>
+                                       <td>
+                                        <a href="{{ employee_payment.get_absolute_url }}">{{ employee_payment.employee }}</a>
+                                       </td>
+                                       <td> {{ employee_payment.voucher_number }} </td>
+                                       <td>{{ employee_payment.amount }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            {% endif %}
+
+                            {% if branch_payment_expense_qs %}
+                            <h6 class="my-4 bg-primary">Payed To ABC : {{ branch_payment_expense }} </h6>
+                            <table class="table  table-striped ">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Branch</th>
+                                        <th>Payment Voucher</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    {% for branch_payment in branch_payment_expense_qs %}
+                                    <tr>
+                                        <td>{{ branch_payment.date }}</td>
+                                       <td>
+                                        <a href="{{ branch_payment.get_absolute_url }}">{{ branch_payment.branch_account.user.branch }}</a>
+                                       </td>
+                                       <td>{{ branch_payment.voucher_number }}</td>
+                                       <td>{{ branch_payment.amount }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            {% endif %}
+
+                            {% if other_expense_qs %}
+                            <h6 class="my-4 bg-primary">Other Expense : {{ other_expense }}</h6>
+                            <table class="table  table-striped ">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Perticular</th>
+                                        <th>Voucher Number</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    {% for otherexpense in other_expense_qs %}
+                                    <tr>
+                                        <td>{{ otherexpense.date }}</td>
+                                        <td><a href="{{ otherexpense.get_absolute_url }}">{{ otherexpense.expense_account }}</a></td>
+                                        <td>{{ otherexpense.voucher_number }}</td>
+                                        <td>{{ otherexpense.amount }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            {% endif %}
+
+                            {% if contra_expense_qs %}
+                            <h6 class="my-4 bg-primary">Contra : {{ contra_expense }}</h6>
+                            <table class="table  table-striped ">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Perticular</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    {% for contra_expense in contra_expense_qs %}
+                                    <tr>
+                                        <td>{{ contra_expense.date }}</td>
+                                        <td><a href="{{ contra_expense.get_absolute_url }}">To {{ contra_expense.to_account }}</a></td>
+                                        <td>{{ contra_expense.amount }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            {% endif %}
+                          
+                        </div>
+                        </div>
+                        
+                        <div class="col-6 ">
+                            <div class="table-responsive">
+                            <table class="table table-bordered table-striped fixed-header-table">
+                                <thead>
+                                    <tr class="bg-primary ">
+                                        <th colspan="4" class="text-center bg-light">DR : {{ current_cr }} </th>
+                                    </tr>
+                                   
+                                </thead>
+                               
+                            </table>
+
+                            {% if branch_receipt_income_qs %}
+                            <h6 class="my-4 bg-primary">Branch Receipts : {{ branch_receipt_income }} </h6>
+                            <table class="table  table-striped ">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Branch</th>
+                                        <th>Receipt No</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    {% for branch_receipt in branch_receipt_income_qs %}
+                                    <tr>
+                                        <td>{{ branch_receipt.date }}</td>
+                                       <td>
+                                        <a href="{{ branch_receipt.get_absolute_url }}">{{ branch_receipt.branch_account.user.branch }}</a>
+                                       </td>
+                                       <td>{{ branch_receipt.voucher_number }}</td>
+                                       <td>{{ branch_receipt.amount }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            {% endif %}
+
+                            {% if student_receipt_income_qs %}
+                            <h6 class="my-4 bg-primary">Student Receipts : {{ student_receipt_income }} </h6>
+                            <table class="table  table-striped ">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Student</th>
+                                        <th>Receipt No</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    {% for student_receipt in student_receipt_income_qs %}
+                                    <tr>
+                                        <td>
+                                             {{ student_receipt.date }}
+                                        </td>
+                                        <td><a href="{{ student_receipt.get_absolute_url }}">{{ student_receipt.student }}</a></td>
+                                       <td>{{ student_receipt.voucher_number }}</td>
+                                       <td>{{ student_receipt.amount }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            {% endif %}
+
+                            {% if other_income_qs %}
+                            <h6 class="my-4 bg-primary">Other Income : {{ other_income }} </h6>
+                            <table class="table  table-striped ">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Perticular</th>
+                                        <th>Receipt No</th>
+                                        <th>Debit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    {% for other_income in other_income_qs %}
+                                    <tr>
+                                        <td>{{ other_income.date }}</td>
+                                       <td>
+                                        <a href="{{ other_income.get_absolute_url }}">{{ other_income.income_account }}</a>
+                                       </td>
+                                       <td>{{ other_income.voucher_number }}</td>
+                                       <td>{{ other_income.amount }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            {% endif %}
+
+                            {% if contra_income_qs %}
+                            <h6 class="my-4 bg-primary">Contra : {{ contra_income }}</h6>
+                            <table class="table  table-striped ">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Perticular</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    {% for contra_income in contra_income_qs %}
+                                    <tr>
+                                        <td>{{ contra_income.date }}</td>
+                                        <td><a href="{{ contra_income.get_absolute_url }}">From {{ contra_income.from_account }}</a></td>
+                                        <td>{{ contra_income.amount }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            {% endif %}
+                        </div>
+                        </div>
+                      
+                    </div>
+                </div>
+                {% endif %}
+              
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'app/partials/report_filter.html' %}
+
+{% endblock %}
+

@@ -1,0 +1,109 @@
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-inner slimscroll">
+        <div id="sidebar-menu" class="sidebar-menu">
+            <ul>
+                <li class="menu-title">
+                    <span>Main Menu</span>
+                </li>
+                <li class="{% if is_index %} active {% endif %}">
+                    <a href="{% url 'core:home' %}"><i class="feather-grid"></i> <span> Dashboard</span> </a>
+                </li>
+
+                <li class="{% if is_users %} active {% endif %}">
+                    <a href="{% url 'accounts:user_list' %}"><i class="fas fa-user"></i> <span> Users</span> </a>
+                </li>
+                
+                <li class="{% if is_student %} active {% endif %}">
+                    <a href="{% url 'students:student_list' %}"><i class="fas fa-graduation-cap"></i> <span>
+                            Students</span> </a>
+
+                </li>
+
+
+
+                <li class="{% if is_leave_requests %} active {% endif %}">
+                    <a href="{% url 'hrms:leave_request_list' %}"><i class="fas fa-graduation-cap"></i> <span>
+                            Leave Requests</span> </a>
+
+                </li>
+
+                <li class="{% if is_attendance %} active {% endif %}">
+                    <a href="{% url 'hrms:attendance_list' %}"><i class="fas fa-graduation-cap"></i> <span>
+                        Attendance</span> </a>
+
+                </li>
+                <li class="{% if is_courses %} active {% endif %}">
+                    <a href="{% url 'courses:course_list' %}"><i class="fas fa-graduation-cap"></i> <span>
+                        Courses</span> </a>
+
+                </li>
+                <li class="{% if is_suggestions %} active {% endif %}">
+                    <a href="{% url 'core:suggestion_list' %}"><i class="fas fa-graduation-cap"></i> <span>
+                        Suggestions</span> </a>
+
+                </li>
+                {% comment %}
+                <li class="submenu {% if is_employeepayrolls or is_employeepayments %} active {% endif %}">
+                    <a href="#"><i class="fas fa-building"></i> <span> Salaries</span> <span
+                            class="menu-arrow"></span></a>
+                    <ul>
+                        <li><a href="{% url 'employees:employeepayroll_list' %}"
+                                class="{% if is_employeepayrolls %} active {% endif %}"> Employee Pay Rolls </a>
+                        </li>
+                        <li><a href="{% url 'employees:employeepayment_list' %}"
+                                class="{% if is_employeepayment %} active {% endif %}"> Employee Payments </a>
+                        </li>
+                    </ul>
+                </li>
+                {% endcomment %}
+                <li class="menu-title">
+                    <span>Tasks</span>
+                </li>
+
+                <li class="{% if is_tasks %} active {% endif %}">
+                    <a href="{% url 'tasks:task_list' %}"><i class="fas fa-graduation-cap"></i> <span>
+                           Class Wise Task</span> </a>
+
+                </li>
+
+                <li class="{% if is_student_tasks %} active {% endif %}">
+                    <a href="{% url 'tasks:student_task_list' %}"><i class="fas fa-graduation-cap"></i> <span>
+                            Student Tasks</span> </a>
+
+                </li>
+
+                <li class="menu-title">
+                    <span>Exams</span>
+                </li>
+                {% comment %}
+                <li class="{% if is_series %} active {% endif %}">
+                    <a href="{% url 'exams:series_list' %}"><i class="fas fa-graduation-cap"></i> <span>
+                            Series</span> </a>
+
+                </li>
+                {% endcomment %}
+                <li class="{% if is_exams %} active {% endif %}">
+                    <a href="{% url 'exams:exam_list' %}"><i class="fas fa-graduation-cap"></i> <span>
+                            Class Wise Exam</span> </a>
+
+                </li>
+
+                <li class="{% if is_student_exams %} active {% endif %}">
+                    <a href="{% url 'exams:student_exam_list' %}"><i class="fas fa-graduation-cap"></i> <span>
+                            Student Exams</span> </a>
+
+                </li>
+
+                
+
+
+                
+
+             
+
+               
+
+            </ul>
+        </div>
+    </div>
+</div>
