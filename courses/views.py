@@ -19,7 +19,7 @@ class CourseListView(mixins.HybridListView):
         if usertype == "teacher":
             return super().get_queryset().filter(teacher=self.request.user.employee)
         elif usertype == "student":
-            return super().get_queryset().filter(standard=self.request.user.student.division.standard)
+            return super().get_queryset().filter(standard=self.request.user.student.standard)
         return super().get_queryset()
 
     def get_context_data(self, **kwargs):

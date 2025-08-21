@@ -16,7 +16,6 @@ class User(AbstractUser):
             ("management", "Management"),
             ("student", "Student"),
             ("teacher", "Teacher"),
-            ("worker", "Worker"),
             ("accountant", "Accountant"),
         ),
         default="student",

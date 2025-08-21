@@ -175,7 +175,7 @@
                                 class="{% if is_expense %} active {% endif %}"> Expense </a>
                         </li>
                         <li><a href="{% url 'accounting:expense_account_list' %}"
-                                class="{% if is_expense_account %} active {% endif %}"> Expense Account </a>
+                                class="{% if is_expense_account %} active {% endif %}"> Expense Accounts </a>
                         </li>
                     </ul>
                 </li>
@@ -184,12 +184,13 @@
                     <a href="#"><i class="fas fa-building"></i> <span> Income</span> <span
                             class="menu-arrow"></span></a>
                     <ul>
+                        <li><a href="{% url 'accounting:income_account_list' %}"
+                                class="{% if is_income_account %} active {% endif %}"> Income Accounts </a>
+                        </li>
                         <li><a href="{% url 'accounting:income_list' %}" class="{% if is_income %} active {% endif %}">
                                 Income </a>
                         </li>
-                        <li><a href="{% url 'accounting:income_account_list' %}"
-                                class="{% if is_income_account %} active {% endif %}"> Income Account List </a>
-                        </li>
+                        
                     </ul>
                 </li>
 

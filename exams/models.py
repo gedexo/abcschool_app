@@ -37,7 +37,7 @@ class Exam(BaseModel):
     pass_marks = models.PositiveIntegerField(help_text="Enter the pass marks for the exam")
 
     class Meta:
-        ordering = ["date"]
+        ordering = ["-date"]
 
     def __str__(self):
         return f"{self.series} {self.subject}"

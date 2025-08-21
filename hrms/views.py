@@ -116,13 +116,21 @@ class AttendanceCreateView(mixins.HybridView):
         students = self.get_students_from_form(form)
         student_ids = request.POST.getlist("studentCheckbox")
         date = request.POST.get("date")
+
         for student in students:
             if str(student.pk) in student_ids:
                 is_present = "present"
             else:
                 is_present = "absent"
-            attendance, created = Attendance.objects.get_or_create(student=student, date=date, attendance_recorder=request.user.employee)
+
+            attendance, created = Attendance.objects.get_or_create(
+                student=student,
+                date=date,
+                attendance_recorder=request.user.employee
+            )
             attendance.status = is_present
+            attendance.save()
+
         return redirect("hrms:attendance_list")
 
     def get_students_from_form(self, form):

@@ -43,7 +43,7 @@ class StudentAdmin(BaseAdmin):
         "gender",
         "blood_group",
     )
-    search_fields = ("admission_number", "first_name", "last_name", "email")
+    search_fields = ("admission_number", "first_name", "last_name", "user__email")
 
 
 @admin.register(AcademicYearStudentFee)

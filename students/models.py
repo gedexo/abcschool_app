@@ -91,6 +91,7 @@ class Student(BaseModel):
         max_length=25,
         unique=True,
     )
+    standard = models.ForeignKey("students.Standard", on_delete=models.PROTECT, null=True)
     division = models.ForeignKey(
         Division,
         on_delete=models.PROTECT,
@@ -134,6 +135,13 @@ class Student(BaseModel):
     @property
     def fullname(self):
         return f"{self.first_name} {self.last_name}" if self.last_name else self.first_name
+    
+    def has_current_year_fee(self):
+        from core.views import get_current_academic_year
+        return self.academicyearstudentfee_set.filter(
+            academic_year=get_current_academic_year(),   
+            is_active=True
+        ).exists()
 
     # @staticmethod
     # def next_admission_number():
@@ -148,7 +156,7 @@ class Student(BaseModel):
 
 class AcademicYearStudentFee(BaseModel):
     academic_year = models.CharField(max_length=128, choices=ACADEMIC_YEAR_CHOICES)
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    student = models.ForeignKey("students.Student", on_delete=models.CASCADE) 
     school_fee = models.DecimalField(max_digits=10, decimal_places=2)
     donation_fee = models.DecimalField("Admission Fee", max_digits=10, decimal_places=2)
     pta_fee = models.DecimalField(max_digits=10, decimal_places=2, default=0)

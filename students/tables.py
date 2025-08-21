@@ -20,6 +20,22 @@ class StudentTable(BaseTable):
         {% endif  %}
         """
     )
+    action = columns.TemplateColumn(
+        """
+        {% if not record.has_current_year_fee %}
+            <a href="{% url 'students:student_transfer_update' record.pk %}" class="btn btn-sm btn-light btn-outline-info">
+                Transfer
+            </a>
+        {% endif %}
+        
+        <a href="{{ record.get_absolute_url }}" class="btn btn-sm btn-light btn-outline-info">
+            OPEN
+        </a>
+        """,
+        verbose_name="Action",
+        orderable=False,
+        exclude_from_export=True
+    )
     created = None
 
     class Meta:

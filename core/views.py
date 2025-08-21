@@ -53,9 +53,16 @@ class HomeView(mixins.HybridListView):
         context["today_absent"] = Attendance.objects.filter(date=datetime.today(), status="absent").count()
         if self.request.user.usertype == "student":
             student = self.request.user.student
-            context["current_school_fee"] = AcademicYearStudentFee.objects.filter(student=student, academic_year=get_current_academic_year()).first().total_fee()
-            context["total_paid"] = AcademicYearStudentFee.objects.filter(student=student, academic_year=get_current_academic_year()).first().total_receipt()
-            context["fee_pending"] = AcademicYearStudentFee.objects.filter(student=student, academic_year=get_current_academic_year()).first().pending_fee()
+            print(get_current_academic_year()*222)
+            student_fee = AcademicYearStudentFee.objects.filter( student=student, academic_year=get_current_academic_year()).first()
+            if student_fee:
+                context["current_school_fee"] = student_fee.total_fee()
+                context["total_paid"] = student_fee.total_receipt()
+                context["fee_pending"] = student_fee.pending_fee()
+            else:
+                context["current_school_fee"] = 0
+                context["total_paid"] = 0
+                context["fee_pending"] = 0
         if self.request.user.usertype == "teacher":
             my_divisions = Division.objects.filter(tutor=self.request.user.employee)
             context["my_divisions"] = my_divisions

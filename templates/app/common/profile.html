@@ -29,7 +29,12 @@
                 
                     <div class="col ms-md-n2 profile-user-info">
                       <h4 class="user-name mb-0">{{object.fullname}}</h4>
-                      <h6 class="text-muted"><strong>Designation</strong>: {{object.user.get_usertype_display}}</h6>
+                      <div class="d-flex">
+                        <h6 class="text-muted"><strong>Designation</strong>: {{object.user.get_usertype_display}}</h6>
+                        {% if object.user.usertype == "student" %}
+                          <h6 class="text-muted ms-3"><strong>Standard</strong>: {{object.standard.name}} - {{object.division.name}}</h6>
+                        {% endif %}
+                      </div>
                     </div>
                     <div class="col-auto profile-btn">
                        

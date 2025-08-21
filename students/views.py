@@ -1,9 +1,12 @@
+from core.views import get_current_academic_year
 from accounts.models import User
+from django.http import JsonResponse
 from core import mixins
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 
 from . import tables
+from . import forms
 from .models import (
     AcademicYearStudentFee,
     Division,
@@ -11,6 +14,20 @@ from .models import (
     Student,
     StudentFeeStatement,
 )
+
+
+def get_divisions(request):
+    standard_id = request.GET.get("standard_id")
+    divisions = Division.objects.filter(standard_id=standard_id).select_related("standard")
+
+    data = [
+        {
+            "id": div.id,
+            "name": f"{div.standard.name} - {div.name}"
+        }
+        for div in divisions
+    ]
+    return JsonResponse(data, safe=False)
 
 
 class StudentListView(mixins.HybridListView):
@@ -59,6 +76,7 @@ class StudentDetailView(mixins.HybridDetailView):
 
 
 class StudentCreateView(mixins.HybridCreateView):
+    template_name = "students/student_form.html"
     model = Student
     permissions = ("management", "teacher", "branch", "accountant")
 
@@ -71,10 +89,24 @@ class StudentCreateView(mixins.HybridCreateView):
             form.fields["first_name"].initial = user.first_name
             form.fields["admission_number"].initial = user.username
         return form
+    
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        fee_form = self.get_context_data()['fee_form']
+
+        if fee_form.is_valid():
+            fee_instance = fee_form.save(commit=False)
+            fee_instance.academic_year = get_current_academic_year()
+            fee_instance.student = self.object
+            fee_instance.save()
+
+        return response
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = "Student"
+        context['academic_year'] = get_current_academic_year()
+        context['fee_form'] = forms.TransferFeeForm(self.request.POST or None)
         return context
 
 
@@ -306,3 +338,37 @@ class DivisionUpdateView(mixins.HybridUpdateView):
 class DivisionDeleteView(mixins.HybridDeleteView):
     model = Division
     permissions = ("management",)
+
+
+class StudentTransferUpdateView(mixins.HybridUpdateView):
+    template_name = "students/studenttransfer_form.html"
+    model = Student
+    form_class = forms.StudentTransferForm
+    exclude=None
+    permissions = ("management", "teacher", "branch", "accountant")
+
+    def get_queryset(self):
+        base_queryset = self.model.objects.filter(is_active=True)
+        user_type = self.request.user.usertype
+        if user_type == "branch":
+            base_queryset = base_queryset.filter(batch__branch__user=self.request.user)
+        return base_queryset
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        fee_form = self.get_context_data()['fee_form']
+
+        if fee_form.is_valid():
+            fee_instance = fee_form.save(commit=False)
+            fee_instance.academic_year = get_current_academic_year()
+            fee_instance.student = self.object
+            fee_instance.save()
+
+        return response
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = f"{get_current_academic_year()} Student Transfer"
+        context['academic_year'] = get_current_academic_year()
+        context['fee_form'] = forms.TransferFeeForm(self.request.POST or None)
+        return context

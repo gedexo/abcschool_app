@@ -210,7 +210,7 @@
                     <div class="db-widgets d-flex justify-content-between align-items-center">
                         <div class="db-info">
                             <h6>Total Fee</h6>
-                            <h3>{{ current_school_fee }} </h3>
+                            <h3>{{ current_school_fee|floatformat:2 }} </h3>
                         </div>
                     </div>
                 </div>
@@ -224,7 +224,7 @@
                     <div class="db-widgets d-flex justify-content-between align-items-center">
                         <div class="db-info">
                             <h6>Fee Paid</h6>
-                            <h3>{{ total_paid }} </h3>
+                            <h3>{{ total_paid|floatformat:2 }} </h3>
                         </div>
                     </div>
                 </div>
@@ -237,7 +237,7 @@
                     <div class="db-widgets d-flex justify-content-between align-items-center">
                         <div class="db-info">
                             <h6>Fee Pending</h6>
-                            <h3>{{ fee_pending }} </h3>
+                            <h3>{{ fee_pending|floatformat:2 }} </h3>
                         </div>
                     </div>
                 </div>

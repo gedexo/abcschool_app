@@ -5,6 +5,8 @@ from . import views
 app_name = "students"
 
 urlpatterns = [
+    #ajax 
+    path("get-divisions/", views.get_divisions, name="get_divisions"),
     path("", views.StudentListView.as_view(), name="student_list"),
     path("student/<str:pk>/", views.StudentDetailView.as_view(), name="student_detail"),
     path("new/student/", views.StudentCreateView.as_view(), name="student_create"),
@@ -88,7 +90,7 @@ urlpatterns = [
     ),
     path("divisions/", views.DivisionListView.as_view(), name="division_list"),
     path("division/<str:pk>/", views.DivisionDetailView.as_view(), name="division_detail"),
-    path("dew/Division/", views.DivisionCreateView.as_view(), name="division_create"),
+    path("new/Division/", views.DivisionCreateView.as_view(), name="division_create"),
     path(
         "division/<str:pk>/update/",
         views.DivisionUpdateView.as_view(),
@@ -99,4 +101,5 @@ urlpatterns = [
         views.DivisionDeleteView.as_view(),
         name="division_delete",
     ),
+    path("transfer/<str:pk>/", views.StudentTransferUpdateView.as_view(), name="student_transfer_update")
 ]
